@@ -3,11 +3,12 @@ import styled, {css} from "styled-components";
 
 interface IProps {
     value: boolean;
+    name?: string;
     label?: string;
     onChange: (value: boolean, event: BaseSyntheticEvent) => void;
 }
 
-export const Switch: FC<IProps> = ({value, label, onChange}) => {
+export const Switch: FC<IProps> = ({value, label, onChange, name}) => {
     const changeValue = useCallback(
         (event) => {
             onChange(!value, event);
@@ -17,7 +18,7 @@ export const Switch: FC<IProps> = ({value, label, onChange}) => {
 
     return (
         <Container>
-            <input type="checkbox" checked={value} onChange={changeValue}/>
+            <input type="checkbox" checked={value} onChange={changeValue} name={name}/>
             <Checkbox checked={value}>
                 <Circle checked={value}/>
             </Checkbox>

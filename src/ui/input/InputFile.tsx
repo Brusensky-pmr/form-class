@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 interface IProps {
     onChange?: any;
+    name?: string;
 }
 
-export const InputFile: FC<IProps> = ({onChange}) => {
+export const InputFile: FC<IProps> = ({onChange, name}) => {
     return (
         <Container>
             <label>Загрузить фото
-                <input type="file" name={"userPhoto"} onChange={onChange}/>
+                <input type="file" name={name} onChange={onChange}/>
             </label>
         </Container>
     );

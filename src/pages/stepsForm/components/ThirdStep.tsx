@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {BaseSyntheticEvent, FC, useState} from "react";
 import {BaseFlexContainer, ButtonContainer, StyledForm} from "../styles";
 import {Input} from "../../../ui/input/Input";
 import {InputFile} from "../../../ui/input/InputFile";
@@ -10,13 +10,73 @@ interface IProps {
 }
 
 export const ThirdStep: FC<IProps> = ({goBack}) => {
-    const [isChecked, setIsChecked] = useState(false);
+    const [state3, setState3] = useState({
+        parameters: {
+            ticketAmount: 0,
+            placeClass: "bitch",
+            adequatePilot: false,
+        },
+        businessCondition: {
+            isHandsome: false,
+            customerPhoto: "",
+        }
+    });
+    const handleClassChange = (event: BaseSyntheticEvent) => {
+        setState3(state => {
+            console.log(event.target.value);
+            console.log(state);
 
+            return {
+                ...state,
+                parameters: {
+                    ...state.parameters,
+                    placeClass: event.target.value,
+                }
+            }
+        })
+    }
+    const handleVidyatelChange = (value: boolean, event: BaseSyntheticEvent) => {
+        setState3(state => {
+            console.log(value);
+            console.log(state);
+
+            return {
+                ...state,
+                parameters: {
+                    ...state.parameters,
+                    adequatePilot: value,
+                }
+            }
+        })
+        event.stopPropagation();
+    }
+    const handleBeautyChange = (event: BaseSyntheticEvent) => {
+        setState3(state => {
+            console.log(event.target.checked);
+            console.log(state);
+
+            return {
+                ...state,
+                businessCondition: {
+                    ...state.businessCondition,
+                    isHandsome: event.target.checked,
+                }
+            }
+        })
+    }
+    const handleSubmit = (event: BaseSyntheticEvent) => {
+        event.preventDefault();
+        const elements = event.target.elements;
+        console.log(event.target.elements);
+        console.log("placeClass", elements.placeClass.value);
+        console.log("isHandsome", elements.isHandsome);
+        console.log("customerPhoto", elements.customerPhoto);
+        console.log("adequatePilot", elements.adequatePilot.checked);
+        console.log("ticketAmount", elements.ticketAmount.value);
+        console.log(state3);
+    }
     return (
-        <StyledForm
-            action="#"
-            style={{display: "flex", flexDirection: "column", rowGap: "12px"}}
-        >
+        <StyledForm action="#" onSubmit={handleSubmit}>
             <fieldset style={{display: "flex", flexDirection: "column", rowGap: "12px"}}>
                 <legend>Параметры</legend>
                 <Input
@@ -26,29 +86,36 @@ export const ThirdStep: FC<IProps> = ({goBack}) => {
                     id={"ticketAmount"}
                     name={"ticketAmount"}
                 />
-
                 <BaseFlexContainer>
                     <div>Класс</div>
-                    <select name="placeClass" id="placeClass">
-                        <option value="1">Супер эконом (стоячий)</option>
-                        <option value="2">Эконом (табурет)</option>
-                        <option value="3">Бизнес (кресло dxRacer)</option>
+                    <select name="placeClass" id="placeClass" onChange={handleClassChange}>
+                        <option value="bitch">Супер эконом (стоячий)</option>
+                        <option value="norm">Эконом (табурет)</option>
+                        <option value="cashNotProblem">Бизнес (кресло dxRacer)</option>
                     </select>
                 </BaseFlexContainer>
                 <BaseFlexContainer>
                     <div>Трезвый пилот</div>
-                    <Switch value={isChecked} onChange={setIsChecked}/>
+                    <Switch name={"adequatePilot"} value={state3.parameters.adequatePilot}
+                            onChange={handleVidyatelChange}/>
                 </BaseFlexContainer>
             </fieldset>
-            <fieldset>
-                <p>В бизнес классе летают только красивые люди.</p>
-                <input type="checkbox" id={"beautyTest"}/>
-                <label htmlFor="beautyTest">Я красавчик!</label>
-                <BaseFlexContainer>
-                    <div>Докажите!</div>
-                    <InputFile/>
-                </BaseFlexContainer>
-            </fieldset>
+            {state3.parameters.placeClass === "cashNotProblem" &&
+                <fieldset>
+                    <p>В бизнес классе летают только красивые люди.</p>
+                    <input type="checkbox" name={"isHandsome"} id={"isHandsome"} onChange={handleBeautyChange}/>
+                    <label htmlFor="beautyTest">Я красавчик!</label>
+                    {
+                        state3.businessCondition.isHandsome && (<>
+                            <p/>
+                            <BaseFlexContainer>
+                                <div>Докажите!</div>
+                                <InputFile name={"customerPhoto"}/>
+                            </BaseFlexContainer>
+                        </>)
+                    }
+                </fieldset>
+            }
 
             <ButtonContainer>
                 <button onClick={goBack}>Назад</button>
