@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Aviasales} from "./pages/stepsForm/Aviasales";
+import styled from "styled-components";
+//Авиасеилз
+//Валидация
+//DatePicker
+//Картинки
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export function App() {
+    return (
+        <Container>
+            <h1>Авиасейлс курильщика</h1>
+            <FormsContainer>
+                <Aviasales/>
+            </FormsContainer>
+        </Container>
+    );
 }
 
-export default App;
+const Container = styled.div`
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px;
+  overflow: hidden;
+`;
+const FormsContainer = styled.div`
+  width: 350px;
+`;
